@@ -13,6 +13,7 @@ void	send_binary_char(int pid, char c)
 			kill(pid, SIGUSR1);
 		c = c >> 1; // avançar para o próximo bit
 		i++;
+		usleep(100);
 	}
 }
 
@@ -34,9 +35,9 @@ int	main(int argc, char *argv[])
 {
 	int		pid;
 	char	*msg;
+
 	pid = ft_atoi(argv[1]);
 	msg = argv[2];
-	printf("%s", msg);
 	if (argc == 3 && verify_params(argv))
 	{
 		while (*msg)
