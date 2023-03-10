@@ -1,0 +1,109 @@
+Filipe Oliveira
+estou a fazer o projeto minitalk com bonus da escola 42. tenho que criar dois ficheiros .c, o cliente.c e o server.c
+ao executar o ./server printo um pid o qual uso ao excutar ./cliente num novo terminal adicionando tambem uma frase
+
+./cliente pid teste
+
+a palavra teste e enviada do terminal cliente para o terminal server. apos a palavra chegar na totalidade ao server devolve um sinal atraves de kill e no terminal cliente surge a frase texto recebido.
+
+o meu codido server.c:
+
+void	handle_signal(int sig, siginfo_t *siginfo, void *context)
+{
+	static int	current_bit = 0;
+	int			client_pid;
+	static char	ascii = 0;
+
+	(void) context;
+	client_pid = siginfo->si_pid;
+	if (sig == SIGUSR2)
+		ascii += 1 << current_bit;
+	if (current_bit == 7)
+	{
+		write(1, &ascii, 1);
+		ascii = 0;
+		current_bit = 0;
+		kill(client_pid, SIGUSR2);
+	}
+	else
+		current_bit++;
+}
+
+
+int main(void)
+{
+	int pid;
+	struct sigaction sa;
+	
+	sa.sa_sigaction = &handle_signal;
+	sa.sa_flags = SA_SIGINFO;
+	pid =  getpid();
+	write(1, "PID : ", 6);
+	ft_putnbr_fd(pid, 1);
+	write(1, "\n", 1);
+	while (1)
+	{
+		sigaction(SIGUSR1, &sa, NULL);
+		sigaction(SIGUSR2, &sa, NULL);
+		pause();
+	}
+}
+
+o meu codigo client.c:
+
+static void	signal_from_server(int sig, siginfo_t *info, void *context)
+{
+	(void) context;
+	if (sig == SIGUSR2)
+		write(1, "Texto recebido\n", 15);
+}
+
+void	send_binary_char(int pid, char c)
+{
+	int	i;
+
+	i = 0;
+	while (i < 8)
+	{
+		if (c & 1)// se o bit atual é = 1
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		c = c >> 1; // avançar para o próximo bit
+		i++;
+		usleep(1000);
+	}
+}
+
+int	verify_params(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[1][i])
+	{
+		if (ft_isdigit(argv[1][i]) != 1)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	main	(int argc, char *argv[])
+{
+	int		pid;
+	char	*msg;
+	struct sigaction sa;
+	sa.sa_sigaction = &signal_from_server;
+	pid = ft_atoi(argv[1]);
+	msg = argv[2];
+	
+	if (argc == 3 && verify_params(argv))
+	{
+		sigaction(SIGUSR2, &sa, NULL);
+		while (*msg)
+			send_binary_char(pid, *msg++);
+	}
+}
+
+quando faço ./client pid teste a mensagem texto recebido surge a cada letra e eu quero que surja apenas no fim 
