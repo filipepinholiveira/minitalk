@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpinho-d <fpinho-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/01 18:19:33 by fpinho-d          #+#    #+#             */
+/*   Updated: 2023/03/13 16:21:23 by fpinho-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
 
@@ -16,7 +28,7 @@ void	handle_signal(int sig, siginfo_t *siginfo, void *context)
 		write(1, &ascii, 1);
 		ascii = 0;
 		current_bit = 0;
-		//kill(client_pid, SIGUSR2);
+		kill(client_pid, SIGUSR2);
 	}
 	else
 		current_bit++;
