@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpinho-d <fpinho-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:19:48 by fpinho-d          #+#    #+#             */
-/*   Updated: 2023/03/21 19:48:00 by fpinho-d         ###   ########.fr       */
+/*   Updated: 2023/03/21 19:48:08 by fpinho-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	main(int argc, char *argv[])
 	msg = argv[2];
 	if (argc == 3 && verify_params(argv))
 	{
+		sigaction(SIGUSR2, &sa, NULL);
 		while (*msg)
 			send_binary_char(pid, *msg++);
 		send_binary_char(pid, '\0');

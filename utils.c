@@ -6,7 +6,7 @@
 /*   By: fpinho-d <fpinho-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:19:39 by fpinho-d          #+#    #+#             */
-/*   Updated: 2023/03/01 18:19:40 by fpinho-d         ###   ########.fr       */
+/*   Updated: 2023/03/21 19:15:18 by fpinho-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_atoi(const char *str)
 		atoi = atoi * 10 + str[i] - 48;
 		i++;
 	}
-    return (atoi *signal);
+	return (atoi * signal);
 }
 
 int	ft_isdigit(int arg)
