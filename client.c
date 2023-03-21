@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpinho-d <fpinho-d@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fpinho-d <fpinho-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:19:48 by fpinho-d          #+#    #+#             */
-/*   Updated: 2023/03/10 11:30:07 by fpinho-d         ###   ########.fr       */
+/*   Updated: 2023/03/21 14:08:40 by fpinho-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
 
-// static void	signal_from_server(int sig, siginfo_t *info, void *context)
-// {
-// 	(void) context;
-// 	if (sig == SIGUSR2)
-// 		write(1, "Texto recebido\n", 15);
-// }
+static void	signal_from_server(int sig, siginfo_t *info, void *context)
+{
+	(void) context;
+	if (sig == SIGUSR2)
+		write(1, "Texto recebido\n", 15);
+}
 
 void	send_binary_char(int pid, char c)
 {
@@ -51,26 +51,21 @@ int	verify_params(char **argv)
 	return (1);
 }
 
-void	message_recieved(int sig)
-{
-	if (sig == SIGUSR2)
-		write(1, "Signal sent successfully!\n", 26);
-}
-
-
 int	main	(int argc, char *argv[])
 {
 	int		pid;
 	char	*msg;
-	
+	struct sigaction sa;
+	sa.sa_sigaction = &signal_from_server;
 	pid = ft_atoi(argv[1]);
 	msg = argv[2];
 	
 	if (argc == 3 && verify_params(argv))
 	{
-		signal(SIGUSR1, &message_recieved);
-		signal(SIGUSR2, &message_recieved);
+		sigaction(SIGUSR2, &sa, NULL);
 		while (*msg)
 			send_binary_char(pid, *msg++);
+		send_binary_char(pid, '\0');
 	}
+	return (0);
 }

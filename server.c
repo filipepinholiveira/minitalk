@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpinho-d <fpinho-d@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: fpinho-d <fpinho-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:19:33 by fpinho-d          #+#    #+#             */
-/*   Updated: 2023/03/10 13:19:07 by fpinho-d         ###   ########.fr       */
+/*   Updated: 2023/03/21 14:03:08 by fpinho-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ void	handle_signal(int sig, siginfo_t *siginfo, void *context)
 		ascii += 1 << current_bit;
 	if (current_bit == 7)
 	{
+		if (ascii == '\0')
+			kill(client_pid, SIGUSR2);
 		write(1, &ascii, 1);
 		ascii = 0;
 		current_bit = 0;
-		kill(client_pid, SIGUSR2);
 	}
 	else
 		current_bit++;
