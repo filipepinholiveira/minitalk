@@ -42,4 +42,4 @@ clean:
 fclean: clean
 	rm -f $(CLIENT) $(SERVER) $(CLIENT_BONUS) $(SERVER_BONUS)
 
-re: fclean all
+re: fclean all bonus

@@ -6,7 +6,7 @@
 /*   By: fpinho-d <fpinho-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:19:48 by fpinho-d          #+#    #+#             */
-/*   Updated: 2023/03/21 19:48:08 by fpinho-d         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:09:54 by fpinho-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	signal_from_server(int sig, siginfo_t *info, void *context)
 {
 	(void) context;
 	if (sig == SIGUSR2)
-		write(1, "Texto recebido\n", 15);
+		write(1, "Mensagem enviada 🥳\n", 22);
 }
 
 void	send_binary_char(int pid, char c)
