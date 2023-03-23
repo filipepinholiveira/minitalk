@@ -6,11 +6,11 @@
 /*   By: fpinho-d <fpinho-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:19:33 by fpinho-d          #+#    #+#             */
-/*   Updated: 2023/03/21 20:00:24 by fpinho-d         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:18:16 by fpinho-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 void	handle_signal(int sig, siginfo_t *siginfo, void *context)
 {

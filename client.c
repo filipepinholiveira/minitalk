@@ -6,7 +6,7 @@
 /*   By: fpinho-d <fpinho-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 18:19:48 by fpinho-d          #+#    #+#             */
-/*   Updated: 2023/03/21 19:48:00 by fpinho-d         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:13:18 by fpinho-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	send_binary_char(int pid, char c)
 			kill(pid, SIGUSR1);
 		c = c >> 1;
 		i++;
-		usleep(1000);
+		usleep(100);
 	}
 }
 
